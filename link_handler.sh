@@ -8,11 +8,11 @@
 # config
 web="$BROWSER"
 edit="$TERMINAL -e $EDITOR"
-podcast="tsp $TERMINAL -e mpv --no-audio-display"
-video="tsp mpv --really-quiet"
-picture="nsxiv -q -a -s w"
+podcast="mpv --no-audio-display"
+video="mpv --really-quiet"
+youtube="ytfzf -a -f --detach"
+picture="nsxiv-url"
 document="$READER"
-download="$TERMINAL -e terminal_wrapper.sh aria2c.sh"
 
 tmp_download="curl -fsS "
 tmp_readable="python -W ignore -m readability.readability -u"
@@ -98,16 +98,30 @@ case "$uri_lower" in
         ;;
     *.mkv \
         | *.mp4 \
-        | *.webm \
-        | *'youtube.com/watch'* \
-        | *'youtube.com/playlist'* \
-        | *'youtu.be'*)
+        | *.webm) \
             notify-send \
                 -u low \
                 "link handler - add video to taskspooler" \
                 "$uri"
             open "$video"
             ;;
+
+    *'youtube.com/watch'* \
+        | *'youtube.com/playlist'* \
+        | *'youtu.be'*)
+            notify-send \
+                -u low \
+                "link handler - add youtube video to taskspooler" \
+                "$uri"
+            open "$youtube"
+            ;;
+    *'mangasee'*)
+      notify-send \
+        -u low\
+        "link handler - add Manga to taskspooler"
+        gallery-dl -q --exec-after 'nsxiv {}' "$uri"
+          ;;
+
     *.mp3 \
         | *.ogg \
         | *.flac \
@@ -128,7 +142,7 @@ case "$uri_lower" in
                 -u low \
                 "link handler - open picture" \
                 "$uri"
-            open --tmp "$picture" &
+            open "$picture"
             ;;
     *.pdf \
         | *.ps \
