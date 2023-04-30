@@ -119,7 +119,7 @@ case "$uri_lower" in
       notify-send \
         -u low\
         "link handler - add Manga to taskspooler"
-        gallery-dl -q --exec-after 'nsxiv {}' "$uri" &
+        st -n st_gal gallery-dl --exec-after 'setsid -f nsxiv {}' "$uri" &
           ;;
 
     *.mp3 \
