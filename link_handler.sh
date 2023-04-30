@@ -10,7 +10,7 @@ web="$BROWSER"
 edit="$TERMINAL -e $EDITOR"
 podcast="mpv --no-audio-display"
 video="mpv --really-quiet"
-youtube="ytfzf -a -f --detach"
+youtube="ytfzf -D --detach"
 picture="nsxiv-url"
 document="$READER"
 
@@ -119,7 +119,7 @@ case "$uri_lower" in
       notify-send \
         -u low\
         "link handler - add Manga to taskspooler"
-        gallery-dl -q --exec-after 'nsxiv {}' "$uri"
+        gallery-dl -q --exec-after 'nsxiv {}' "$uri" &
           ;;
 
     *.mp3 \
